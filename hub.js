@@ -6,22 +6,24 @@ const eventPool = require('./eventPool');
 const driverHandler = require('./driver/handler');
 const vendorHandler = require('./vendor/handler');
 
-eventPool.on('REQUEST_DELIVERY', driverHandler);
-eventPool.on('IN_TRANSIT', vendorHandler);
-eventPool.on('DELIVERY', vendorHandler);
-const eventList = ['REQUEST_DELIVERY','IN_TRANSIT', 'DELIVERED'];
+eventPool.on('pickup', driverHandler);
+eventPool.on('in-transit', vendorHandler);
+eventPool.on('delivered', vendorHandler);
 
 setInterval(() => {
-console.log(`Vendor requests delivery at ${Date().slice(0, 24)}\n`);
-let payload =  {
-  store: `${chance.color()} ${chance.coin()}`,
-  orderId: chance.guid(),
-  customer: chance.name(),
-  address: chance.address(),
-}
+  let payload = {
+    event: 'pickup',
+    time: Date().slice(0, 24),
+    payload: {
+      store: `${chance.color()} ${chance.coin()}`,
+      orderId: chance.guid(),
+      customer: chance.name(),
+      address: chance.address(),
+    }
+  }
+  console.log('\nEVENT', payload);
 
-eventPool.emit('REQUEST_DELIVERY', payload);
-  
+
+  eventPool.emit('pickup', payload);
+
 }, 5000);
-
-module.exports = eventList;
