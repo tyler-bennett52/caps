@@ -3,11 +3,11 @@
 const Chance = require('chance');
 const chance = new Chance();
 const eventPool = require('./eventPool');
-const driverHandler = require('./driver/handler');
+const {handlePickup, handleDelivery} = require('./driver/handler');
 const vendorHandler = require('./vendor/handler');
 
-eventPool.on('pickup', driverHandler);
-eventPool.on('in-transit', vendorHandler);
+eventPool.on('pickup', handlePickup);
+eventPool.on('in-transit', handleDelivery);
 eventPool.on('delivered', vendorHandler);
 
 setInterval(() => {
