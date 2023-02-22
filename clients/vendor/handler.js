@@ -10,16 +10,16 @@ const chance = new Chance();
 const confirmDelivery = (payload) => {
   setTimeout(() => {
     console.log(`Thank you for shopping with us ${payload.payload.customer}`)
-    socket.emit('deliery-confirmation', payload)
+    socket.emit('delivery-confirmation', payload)
   }, 500);
 }
 
 socket.emit('join', 'vendors');
+socket.on('initiate-pickup', initiatePickup);
 socket.on('delivered', confirmDelivery);
 socket.on('successful-join', (room) => console.log('Joined ', room))
 
-const initiatePickup = () => {
-  setInterval(() => {
+function initiatePickup() {
     let payload = {
       event: 'pickup',
       time: Date().slice(0, 24),
@@ -32,10 +32,8 @@ const initiatePickup = () => {
     }
     console.log('\nEVENT', payload);
 
-
     socket.emit('pickup', payload);
 
-  }, 5000);
 };
 
 initiatePickup()

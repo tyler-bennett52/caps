@@ -1,7 +1,7 @@
 'use strict';
 
 const { io } = require('socket.io-client');
-const socket = io('http://localhost:3006/caps');
+const socket = io(`http://localhost:3006/caps`);
 
 const handlePickup = (payload) => {
   setTimeout(() => {
@@ -24,6 +24,9 @@ const handleDelivery = (payload) => {
   }, 500);
 }
 
+socket.on('initiate-pickup', () => {
+  console.log('THIS SHOULD NOT BE IN THE CONSOLE')
+})
 socket.on('pickup', handlePickup);
 socket.on('in-transit', handleDelivery);
 

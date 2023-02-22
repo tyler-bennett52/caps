@@ -10,13 +10,12 @@ const caps = server.of('/caps');
 
 caps.on('connection', (socket) => {
   console.log('Socket connected to caps', socket.id);
-  caps.emit('initiate-pickup')
   // socket.onAny(console.log(payload));
 
   socket.on('join', (room) => {
     socket.join(room);
     console.log('successful join to room ', room);
-    socket.to('vendors').emit('successful-join', 'vendors')
+    socket.to('vendors').emit('initiate-pickup', 'vendors')
   });
   
 
@@ -35,8 +34,9 @@ caps.on('connection', (socket) => {
     caps.emit('delivered', payload)
   })
 
-  socket.on('deliery-confirmation', (payload) => {
+  socket.on('delivery-confirmation', (payload) => {
     console.log(`Thank you for shopping with us ${payload.payload.customer}\n`)
+    process.exit();
   })
 })
 
