@@ -11,6 +11,7 @@ const handlePickup = (payload) => {
     payload.time = Date().slice(0, 24);
     console.log('EVENT: ', payload)
     socket.emit('in-transit', payload);
+    socket.emit('received', {id: 'Driver', messageId: payload.payload.orderId})
 
   }, 500);
 }
@@ -19,15 +20,15 @@ const handleDelivery = (payload) => {
   setTimeout(() => {
     console.log(`DRIVER: delivered ${payload.payload.orderId}`)
     payload.event = 'delivered',
-      payload.time = Date().slice(0, 24)
+    payload.time = Date().slice(0, 24)
     console.log(`EVENT: `, payload)
     socket.emit('delivered', payload)
   }, 500);
 }
 
-socket.on('initiate-pickup', () => {
-  console.log('THIS SHOULD NOT BE IN THE CONSOLE')
-})
+
+socket.emit('join', 'Driver');
+socket.emit('get-all', {id: 'Driver'})
 socket.on('pickup', handlePickup);
 socket.on('in-transit', handleDelivery);
 

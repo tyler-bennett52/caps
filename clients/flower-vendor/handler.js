@@ -9,6 +9,7 @@ const chance = new Chance();
 
 
 socket.emit('join', '1-800-flowers');
+socket.emit('get-all', {id: '1-800-flowers'});
 socket.on('initiate-pickup', initiatePickup);
 socket.on('delivered', confirmDelivery);
 socket.on('successful-join', (room) => console.log('Joined ', room))
@@ -25,9 +26,7 @@ function initiatePickup() {
       }
     }
     console.log('\nEVENT', payload);
-
     socket.emit('pickup', payload);
-
 };
 
 
@@ -35,7 +34,8 @@ function confirmDelivery(payload) {
   setTimeout(() => {
     console.log(`Thank you for shopping with us ${payload.payload.customer}`);
     socket.emit('delivery-confirmation', payload);
-    process.exit();
+    socket.emit('received', {id: '1-800-flowers', messageId: payload.payload.orderId})
+    // process.exit();
   }, 500);
 }
 
