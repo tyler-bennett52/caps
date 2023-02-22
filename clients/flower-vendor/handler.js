@@ -8,7 +8,7 @@ const Chance = require('chance');
 const chance = new Chance();
 
 
-socket.emit('join', 'vendors');
+socket.emit('join', '1-800-flowers');
 socket.on('initiate-pickup', initiatePickup);
 socket.on('delivered', confirmDelivery);
 socket.on('successful-join', (room) => console.log('Joined ', room))
@@ -18,7 +18,7 @@ function initiatePickup() {
       event: 'pickup',
       time: Date().slice(0, 24),
       payload: {
-        store: `${chance.state({full: true})} ${chance.animal()}`,
+        store: '1-800-flowers',
         orderId: chance.guid(),
         customer: chance.name(),
         address: chance.address(),
