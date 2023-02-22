@@ -20,23 +20,25 @@ caps.on('connection', (socket) => {
   
 
   socket.on('pickup', (payload) => {
+  
     console.log('EVENT:', payload)
     caps.emit('pickup', payload);
   })
 
   socket.on('in-transit', (payload) => {
+    console.log(`\nDRIVER: picked up ${payload.payload.orderId}`)
     console.log('EVENT:', payload)
     caps.emit('in-transit', payload);
   })
 
   socket.on('delivered', (payload) => {
+    console.log(`\nDRIVER: delivered ${payload.payload.orderId}`)
     console.log('EVENT:', payload)
     caps.emit('delivered', payload)
   })
 
   socket.on('delivery-confirmation', (payload) => {
-    console.log(`Thank you for shopping with us ${payload.payload.customer}\n`)
-    process.exit();
+    console.log(`\nThank you for shopping with us ${payload.payload.customer}\n`)
   })
 })
 

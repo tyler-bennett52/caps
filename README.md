@@ -1,4 +1,4 @@
-# caps (LAB 11)
+# caps (LAB 12)
 
 ## Code Academy Parcel Service (Supply Chain Simulator)
 
@@ -6,7 +6,7 @@
 
 ### Problem Domain  
 
-Simulate Package Delivery with Event Driven Development
+Simulate Package Delivery with Event Driven Development and Socket.io
 
 ### Links and Resources
 
@@ -16,7 +16,7 @@ Simulate Package Delivery with Event Driven Development
 
 #### `.env` requirements (where applicable)
 
-No environment variables
+PORT environment variable
 
 #### How to initialize/run your application (where applicable)
 
@@ -37,8 +37,8 @@ fill this in as you see fit
 
 #### UML
 
-![Lab-11 UML](assets/lab-11-uml.png)
+![Lab-11 UML](assets/lab-12-uml.png)
 
 #### Attribution
 
-Relied on class demo for general structure
+Relied on class demo for general structure and refactor to socket.io

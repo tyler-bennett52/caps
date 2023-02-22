@@ -1,18 +1,12 @@
 'use strict';
 
+require('dotenv').config();
 const { io } = require('socket.io-client');
-const socket = io('http://localhost:3006/caps');
+const socket = io(`http://localhost:${process.env.PORT}/caps`);
 
 const Chance = require('chance');
 const chance = new Chance();
 
-
-const confirmDelivery = (payload) => {
-  setTimeout(() => {
-    console.log(`Thank you for shopping with us ${payload.payload.customer}`)
-    socket.emit('delivery-confirmation', payload)
-  }, 500);
-}
 
 socket.emit('join', 'vendors');
 socket.on('initiate-pickup', initiatePickup);
@@ -24,7 +18,7 @@ function initiatePickup() {
       event: 'pickup',
       time: Date().slice(0, 24),
       payload: {
-        store: `${chance.color()} ${chance.coin()}`,
+        store: `${chance.state({full: true})} ${chance.animal()}`,
         orderId: chance.guid(),
         customer: chance.name(),
         address: chance.address(),
@@ -35,6 +29,16 @@ function initiatePickup() {
     socket.emit('pickup', payload);
 
 };
+
+
+function confirmDelivery(payload) {
+  setTimeout(() => {
+    console.log(`Thank you for shopping with us ${payload.payload.customer}`);
+    socket.emit('delivery-confirmation', payload);
+    process.exit();
+  }, 500);
+}
+
 
 initiatePickup()
 

@@ -1,7 +1,8 @@
 'use strict';
 
+require('dotenv').config();
 const { io } = require('socket.io-client');
-const socket = io(`http://localhost:3006/caps`);
+const socket = io(`http://localhost:${process.env.PORT}/caps`);
 
 const handlePickup = (payload) => {
   setTimeout(() => {
