@@ -1,21 +1,43 @@
 'use strict';
 
-const eventPool = require('../../eventPool');
+const { io } = require('socket.io-client');
+const socket = io('http://localhost:3006/caps');
 
-const handleDelivery = (payload) => {
+const Chance = require('chance');
+const chance = new Chance();
+
+
+const confirmDelivery = (payload) => {
   setTimeout(() => {
-
     console.log(`Thank you for shopping with us ${payload.payload.customer}`)
+    socket.emit('deliery-confirmation', payload)
   }, 500);
 }
 
-const oldHandleDelivery = (payload) => {
-  setTimeout(() => {
-    console.log(`Package Delivered ${Date().slice(0, 24)}`, payload);
-    eventPool.emit('delivered', payload);
+socket.emit('join', 'vendors');
+socket.on('delivered', confirmDelivery);
+socket.on('successful-join', (room) => console.log('Joined ', room))
 
-  }, 500);
+const initiatePickup = () => {
+  setInterval(() => {
+    let payload = {
+      event: 'pickup',
+      time: Date().slice(0, 24),
+      payload: {
+        store: `${chance.color()} ${chance.coin()}`,
+        orderId: chance.guid(),
+        customer: chance.name(),
+        address: chance.address(),
+      }
+    }
+    console.log('\nEVENT', payload);
 
-}
 
-module.exports = handleDelivery
+    socket.emit('pickup', payload);
+
+  }, 5000);
+};
+
+initiatePickup()
+
+module.exports = confirmDelivery

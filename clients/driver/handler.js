@@ -1,6 +1,7 @@
 'use strict';
 
-let eventPool = require('../../eventPool');
+const { io } = require('socket.io-client');
+const socket = io('http://localhost:3006/caps');
 
 const handlePickup = (payload) => {
   setTimeout(() => {
@@ -8,7 +9,7 @@ const handlePickup = (payload) => {
     payload.event = 'in-transit';
     payload.time = Date().slice(0, 24);
     console.log('EVENT: ', payload)
-    eventPool.emit('in-transit', payload);
+    socket.emit('in-transit', payload);
 
   }, 500);
 }
@@ -19,9 +20,12 @@ const handleDelivery = (payload) => {
     payload.event = 'delivered',
       payload.time = Date().slice(0, 24)
     console.log(`EVENT: `, payload)
-    eventPool.emit('delivered', payload)
+    socket.emit('delivered', payload)
   }, 500);
 }
+
+socket.on('pickup', handlePickup);
+socket.on('in-transit', handleDelivery);
 
 
 
