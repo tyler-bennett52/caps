@@ -24,7 +24,7 @@ const payload = {
 console.log = jest.fn();
 
 describe('Simulated Vendor', () => {
-  it('Simulates deliery completion, logs thank you message', () => {
+  it('Simulates delivery completion, logs thank you message', () => {
     vendorHandler(payload);
     setTimeout(() => {
       expect(console.log).toHaveBeenCalledWith(`Thank you for shopping with us ${payload.payload.customer}`)

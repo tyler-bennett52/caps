@@ -40,6 +40,4 @@ function confirmDelivery(payload) {
 }
 
 
-initiatePickup()
-
 module.exports = confirmDelivery

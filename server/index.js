@@ -15,7 +15,7 @@ caps.on('connection', (socket) => {
   socket.on('join', (room) => {
     socket.join(room);
     console.log('successful join to room ', room);
-    socket.to('vendors').emit('initiate-pickup', 'vendors')
+    caps.to('vendors').emit('initiate-pickup', 'vendors')
   });
   
 

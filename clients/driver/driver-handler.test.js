@@ -1,7 +1,9 @@
 'use strict'
 
-const eventPool = require('../../eventPool');
+// const eventPool = require('../../eventPool');
+
 const { handlePickup, handleDelivery } = require('./handler');
+const socket = require('socket.io-client');
 
 const payload = {
   event: 'pickup',
@@ -15,19 +17,19 @@ const payload = {
 
 }
 
-jest.mock('../eventPool.js', () => {
-  return {
-    on: jest.fn(),
-    emit: jest.fn(),
-  }
-})
+// jest.mock('socket.io-client', () => {
+//   return {
+//     on: jest.fn(),
+//     emit: jest.fn(),
+//   }
+// })
 console.log = jest.fn();
 
 describe('Simulated Driver', () => {
   it('Simulates pickup, emits in-transit', async () => {
     handlePickup(payload)
     setTimeout(() => {
-      expect(eventPool.emit).toHaveBeenCalledWith('in-transit', payload)
+      expect(socket.emit).toHaveBeenCalledWith('in-transit', payload)
       expect(console.log).toHaveBeenCalledWith(`DRIVER: picked up ${payload.payload.orderId}`)
     }, 1000);
   })
@@ -35,7 +37,7 @@ describe('Simulated Driver', () => {
   it('Simulates delivery, emits delivered', async () => {
     handleDelivery(payload)
     setTimeout(() => {
-      expect(eventPool.emit).toHaveBeenCalledWith('delivered', payload)
+      expect(socket.emit).toHaveBeenCalledWith('delivered', payload)
       expect(console.log).toHaveBeenCalledWith(`DRIVER: delivered ${payload.payload.orderId}`)
     }, 1000);
   })
