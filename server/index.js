@@ -60,8 +60,7 @@ caps.on('connection', (socket) => {
       throw new Error('There\'s no there there');
     } 
     
-    let removed = currQueue.remove(payload.messageId);
-    console.log(removed)
+    currQueue.remove(payload.messageId);
   })
 
   socket.on('get-all', (payload) => {
@@ -99,12 +98,3 @@ const listen = () => {
 
 
 listen();
-
-function selectQueue(qId) {
-  let currQueue = messageQueue.read(qId);
-  if(!currQueue) {
-    let queueKey = messageQueue.store(qId, new Queue());
-    currQueue = messageQueue.read(queueKey)
-    return currQueue;
-  }
-}
