@@ -1,4 +1,4 @@
-# caps (LAB 12)
+# caps (LAB 13)
 
 ## Code Academy Parcel Service (Supply Chain Simulator)
 
@@ -6,7 +6,7 @@
 
 ### Problem Domain  
 
-Simulate Package Delivery with Event Driven Development and Socket.io
+Simulate Package Delivery with Event Driven Development and Message Queue
 
 ### Links and Resources
 
@@ -20,14 +20,13 @@ PORT environment variable
 
 #### How to initialize/run your application (where applicable)
 
-- `node hub.js`
+- A bit more complicated than usual. Split a terminal in 4 parts running: 1. server/index.js 2. clients/widget-vendor/handler.js 3. clients/flower-vendor/handler.js 4. clients/driver/handler.js
 
 #### How to use your library (where applicable)
 
 #### Features / Routes
 
 Simulates a loop of packages being delivered with events on a cycle of 5 seconds. Loop begins when running `node hub.js`
-
 
 #### Tests
 
@@ -41,8 +40,8 @@ fill this in as you see fit
 
 #### UML
 
-![Lab-12 UML](assets/lab-12-uml.png)
+![Lab-13 UML](assets/lab-13-uml.png)
 
 #### Attribution
 
-Relied on class demo for general structure and refactor to socket.io
+Relied on class demo for general structure and refactor to socket.io, doubly so for the implementation of message queues.
